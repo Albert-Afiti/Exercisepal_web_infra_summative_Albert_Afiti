@@ -1,1 +1,0 @@
-# Drugpal_web_infra_summative

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DrugsPal — Drug Information & Interaction Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <header>
+    <div class="logo">
+      <span class="logo-cross">✚</span>
+      <span class="logo-text">Drugs<em>Pal</em></span>
+    </div>
+    <div class="header-controls">
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="tabs" id="mainNav">
+      <button class="tab active" data-tab="search">Drug Search</button>
+      <button class="tab" data-tab="interactions">Interactions</button>
+      <button class="tab" data-tab="recalls">Recalls</button>
+      <button class="tab cabinet-tab" data-tab="cabinet">
+        Cabinet
+        <span class="cabinet-badge" id="cabinetBadge"></span>
+      </button>
+      <button class="tab" data-tab="insights">Insights</button>
+      <button class="tab" data-tab="about">About</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ── DRUG SEARCH ── -->
+    <section id="tab-search" class="tab-panel active">
+      <div class="hero welcome-hero">
+        <p class="welcome-label">Welcome to</p>
+        <h1>Drugs<em>Pal</em></h1>
+        <p class="subtitle">Your personal drug information dashboard >>>search any medication for dosage, warnings, side effects, interactions, and recall alerts, all in one place <<<</p>
+        <div class="welcome-stats">
+          <div class="welcome-stat">
+            <span class="welcome-stat-icon"></span>
+            <span class="welcome-stat-text">FDA Drug Labels</span>
+          </div>
+          <div class="welcome-divider"></div>
+          <div class="welcome-stat">
+            <span class="welcome-stat-icon"></span>
+            <span class="welcome-stat-text">Interaction Checker</span>
+          </div>
+          <div class="welcome-divider"></div>
+          <div class="welcome-stat">
+            <span class="welcome-stat-icon"></span>
+            <span class="welcome-stat-text">Recall Alerts</span>
+          </div>
+          <div class="welcome-divider"></div>
+          <div class="welcome-stat">
+            <span class="welcome-stat-icon"></span>
+            <span class="welcome-stat-text">Private Cabinet</span>
+          </div>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="drugSearchInput" placeholder="e.g. Ibuprofen, Metformin, Lisinopril…" autocomplete="off" />
+        <button id="drugSearchBtn" class="btn-primary">Search</button>
+      </div>
+      <div id="drugResult" class="result-area"></div>
+    </section>
+
+    <!-- ── INTERACTIONS ── -->
+    <section id="tab-interactions" class="tab-panel">
+      <div class="hero">
+        <h1>INTERACTION<br><em>CHECKER</em></h1>
+        <p class="subtitle">Enter 2–5 medications to check for known drug-drug interactions and severity warnings.</p>
+      </div>
+      <div class="drug-tags-wrapper">
+        <div id="drugTags" class="drug-tags"></div>
+        <div class="search-bar">
+          <input type="text" id="interactionInput" placeholder="Type a drug name and press Enter…" autocomplete="off" />
+          <button id="checkInteractionsBtn" class="btn-primary">Check</button>
+        </div>
+        <p class="hint">Press <kbd>Enter</kbd> to add each drug. Min 2, max 5.</p>
+        <p id="tagError" style="color:var(--danger,#e53);font-size:0.85rem;margin:4px 0 0;min-height:1em"></p>
+      </div>
+      <div id="interactionResult" class="result-area"></div>
+    </section>
+
+    <!-- ── RECALLS ── -->
+    <section id="tab-recalls" class="tab-panel">
+      <div class="hero">
+        <h1>RECALL<br><em>ALERTS</em></h1>
+        <p class="subtitle">Check if a medication has any active FDA enforcement or recall actions.</p>
+      </div>
+      <div class="search-bar">
+        <input type="text" id="recallInput" placeholder="e.g. Metformin, Zantac…" autocomplete="off" />
+        <button id="recallBtn" class="btn-primary">Check Recalls</button>
+      </div>
+      <div id="recallResult" class="result-area"></div>
+    </section>
+
+    <!-- ── MY MEDICINE CABINET ── -->
+    <section id="tab-cabinet" class="tab-panel">
+      <div class="hero">
+        <h1>MY MEDICINE<br><em>CABINET</em></h1>
+        <p class="subtitle">Your personal list of saved medications for quick access to dosage, side effects, and interactions.</p>
+      </div>
+      <div id="cabinetContent" class="result-area"></div>
+    </section>
+
+    <!-- ── INSIGHTS ── -->
+    <section id="tab-insights" class="tab-panel">
+      <div class="hero">
+        <h1>MEDICATION<br><em>INSIGHTS</em></h1>
+        <p class="subtitle">Visual analytics of your saved medications — type distribution, search frequency, and more.</p>
+      </div>
+      <div id="insightsContent" class="result-area"></div>
+    </section>
+
+    <!-- ── ABOUT ── -->
+    <section id="tab-about" class="tab-panel">
+      <div class="hero">
+        <h1>About<br><em>DrugsPal</em></h1>
+        <p class="subtitle">A free, open-access drug information platform built for patients, caregivers, and healthcare students.</p>
+      </div>
+
+      <div class="about-grid">
+
+        <div class="about-card">
+          <div class="about-card-icon"></div>
+          <h3>DRUG SEARCH</h3>
+          <p>Look up any prescription or OTC medication by brand or generic name. Results include purpose, dosage instructions, warnings, side effects, and contraindications — all sourced directly from FDA-approved drug labels.</p>
+        </div>
+
+        <div class="about-card">
+          <div class="about-card-icon"></div>
+          <h3>Interaction Checker</h3>
+          <p>Enter 2–5 medications to check for known drug-drug interactions. Each interaction is classified by severity (High, Moderate, Low) using the NIH RxNorm interaction database, helping you spot potentially dangerous combinations.</p>
+        </div>
+
+        <div class="about-card">
+          <div class="about-card-icon"></div>
+          <h3>RECALL ALERTS</h3>
+          <p>Search for FDA enforcement actions and recall notices for any medication. Results include recall classification (Class I–III), the reason for recall, current status, and the date the recall was initiated.</p>
+        </div>
+
+        <div class="about-card">
+          <div class="about-card-icon"></div>
+          <h3>MY MEDICINE CABINET</h3>
+          <p>Save frequently used or prescribed medications to your personal cabinet for quick access. Your cabinet is stored privately in your browser — nothing is sent to any server. From the cabinet, jump directly to search details, interactions, or recall checks.</p>
+        </div>
+
+      </div>
+
+      <div class="about-section">
+        <h2>DATA SOURCES</h2>
+        <div class="about-sources">
+          <div class="source-item">
+            <div class="source-badge">FDA</div>
+            <div>
+              <strong>OpenFDA Drug Label API</strong>
+              <p>Drug information (purpose, dosage, warnings, side effects) comes from the FDA's official structured product labeling database, updated continuously with the latest approved labels.</p>
+            </div>
+          </div>
+          <div class="source-item">
+            <div class="source-badge">NIH</div>
+            <div>
+              <strong>RxNorm / RxNav (NLM)</strong>
+              <p>Drug identifiers (RxCUI) and interaction data come from the National Library of Medicine's RxNorm database, the standard for clinical drug nomenclature in the United States.</p>
+            </div>
+          </div>
+          <div class="source-item">
+            <div class="source-badge">FDA</div>
+            <div>
+              <strong>OpenFDA Drug Enforcement API</strong>
+              <p>Recall and enforcement data comes from the FDA's drug enforcement reporting system, which tracks voluntary and mandatory product recalls and market withdrawals.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-section">
+        <h2>How to Use</h2>
+        <ol class="about-steps">
+          <li><strong>Drug Search:</strong> Type a medication name (brand or generic) and press Search. Click any section card to expand detailed information. Use the sort buttons to reorder sections.</li>
+          <li><strong>Interaction Checker:</strong> Type each drug name and press <kbd>Enter</kbd> to add it as a tag. Add 2–5 drugs, then click Check. Use the severity filter buttons to focus on high-risk interactions.</li>
+          <li><strong>Recall Alerts:</strong> Enter a drug name and click Check Recalls. Filter results by recall class (I = most serious) or search by keyword.</li>
+          <li><strong>Medicine Cabinet:</strong> After searching a drug, click "Save to Cabinet" to store it. Access your saved medications any time from the Cabinet tab and quickly jump to search, interactions, or recalls.</li>
+        </ol>
+      </div>
+
+      <div class="about-disclaimer">
+        <strong>Medical Disclaimer</strong>
+        <p>DrugsPal is intended for informational and educational purposes only. The information provided does not constitute medical advice and should not be used as a substitute for professional medical guidance, diagnosis, or treatment. Always consult a qualified healthcare provider before making any decisions about your medications. In case of a medical emergency, contact emergency services immediately.</p>
+      </div>
+
+      <div class="about-privacy">
+        <strong>Privacy</strong>
+        <p>DrugsPal does not collect, store, or transmit any personal data. Your Medicine Cabinet is saved exclusively in your browser's local storage and never leaves your device. Search queries are passed to the FDA and NIH APIs for data retrieval but are not logged by DrugsPal.</p>
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+    <p>Data sourced from <a href="https://open.fda.gov" target="_blank">OpenFDA</a> &amp; <a href="https://lhncbc.nlm.nih.gov/RxNav/" target="_blank">RxNorm (NIH)</a> · For informational purposes only · Not a substitute for medical advice</p>
+  </footer>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">Dark Mode</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
