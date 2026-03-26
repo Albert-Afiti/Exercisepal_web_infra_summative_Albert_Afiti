@@ -1,216 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DrugsPal — Drug Information & Interaction Checker</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExercisePal — Your Daily Fitness Trainer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="bg-grid"></div>
 
-  <header>
-    <div class="logo">
-      <span class="logo-cross">✚</span>
-      <span class="logo-text">Drugs<em>Pal</em></span>
-    </div>
-    <div class="header-controls">
-      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <i class="fas fa-dumbbell logo-icon"></i>
+        <span class="logo-text">ExercisePal</span>
+      </div>
+      <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="daily">
+          <i class="fas fa-fire"></i> Daily Workout
+        </button>
+        <button class="tab-btn" data-tab="library">
+          <i class="fas fa-magnifying-glass"></i> Exercise Library
+        </button>
+        <button class="tab-btn" data-tab="weekly">
+          <i class="fas fa-calendar-days"></i> Weekly Plan
+        </button>
+        <button class="tab-btn" data-tab="gyms">
+          <i class="fas fa-location-dot"></i> Nearby Gyms
+        </button>
+      </nav>
+      <button id="theme-btn" class="theme-btn">
+        <i class="fas fa-sun"></i> Light Mode
       </button>
     </div>
-    <nav class="tabs" id="mainNav">
-      <button class="tab active" data-tab="search">Drug Search</button>
-      <button class="tab" data-tab="interactions">Interactions</button>
-      <button class="tab" data-tab="recalls">Recalls</button>
-      <button class="tab cabinet-tab" data-tab="cabinet">
-        Cabinet
-        <span class="cabinet-badge" id="cabinetBadge"></span>
-      </button>
-      <button class="tab" data-tab="insights">Insights</button>
-      <button class="tab" data-tab="about">About</button>
-    </nav>
   </header>
 
-  <main>
-    <!-- ── DRUG SEARCH ── -->
-    <section id="tab-search" class="tab-panel active">
-      <div class="hero welcome-hero">
-        <p class="welcome-label">Welcome to</p>
-        <h1>Drugs<em>Pal</em></h1>
-        <p class="subtitle">Your personal drug information dashboard >>>search any medication for dosage, warnings, side effects, interactions, and recall alerts, all in one place <<<</p>
-        <div class="welcome-stats">
-          <div class="welcome-stat">
-            <span class="welcome-stat-icon"></span>
-            <span class="welcome-stat-text">FDA Drug Labels</span>
-          </div>
-          <div class="welcome-divider"></div>
-          <div class="welcome-stat">
-            <span class="welcome-stat-icon"></span>
-            <span class="welcome-stat-text">Interaction Checker</span>
-          </div>
-          <div class="welcome-divider"></div>
-          <div class="welcome-stat">
-            <span class="welcome-stat-icon"></span>
-            <span class="welcome-stat-text">Recall Alerts</span>
-          </div>
-          <div class="welcome-divider"></div>
-          <div class="welcome-stat">
-            <span class="welcome-stat-icon"></span>
-            <span class="welcome-stat-text">Private Cabinet</span>
-          </div>
-        </div>
+  <main class="main">
+
+    <!-- ── Daily Workout ── -->
+    <section id="tab-daily" class="tab-content active">
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="gym-btn" onclick="setMode('gym')">
+          <i class="fas fa-dumbbell"></i> Gym Workout
+        </button>
+        <button class="mode-btn" id="home-btn" onclick="setMode('home')">
+          <i class="fas fa-house"></i> Home Workout
+        </button>
+      </div>
+      <div id="daily-content">
+        <div class="loading"><div class="spinner"></div><p>Loading today's workout…</p></div>
+      </div>
+    </section>
+
+    <!-- ── Exercise Library ── -->
+    <section id="tab-library" class="tab-content">
+      <div class="section-header">
+        <h2>Exercise Library</h2>
+        <p>Search from hundreds of exercises with step-by-step instructions and animated demonstrations</p>
       </div>
       <div class="search-bar">
-        <input type="text" id="drugSearchInput" placeholder="e.g. Ibuprofen, Metformin, Lisinopril…" autocomplete="off" />
-        <button id="drugSearchBtn" class="btn-primary">Search</button>
+        <input
+          type="text"
+          id="exercise-search"
+          placeholder="Search exercise by name…"
+          onkeydown="if(event.key==='Enter') searchExercises()"
+          autocomplete="off"
+        >
+        <select id="bodypart-filter">
+          <option value="">Filter by body part</option>
+        </select>
+        <select id="sort-filter">
+          <option value="">Sort by</option>
+          <option value="name-asc">Name A–Z</option>
+          <option value="name-desc">Name Z–A</option>
+          <option value="difficulty-asc">Difficulty: Easy first</option>
+          <option value="difficulty-desc">Difficulty: Hard first</option>
+          <option value="equipment">Equipment</option>
+        </select>
+        <button class="btn-primary" onclick="searchExercises()">
+          <i class="fas fa-magnifying-glass"></i> Search
+        </button>
       </div>
-      <div id="drugResult" class="result-area"></div>
-    </section>
-
-    <!-- ── INTERACTIONS ── -->
-    <section id="tab-interactions" class="tab-panel">
-      <div class="hero">
-        <h1>INTERACTION<br><em>CHECKER</em></h1>
-        <p class="subtitle">Enter 2–5 medications to check for known drug-drug interactions and severity warnings.</p>
-      </div>
-      <div class="drug-tags-wrapper">
-        <div id="drugTags" class="drug-tags"></div>
-        <div class="search-bar">
-          <input type="text" id="interactionInput" placeholder="Type a drug name and press Enter…" autocomplete="off" />
-          <button id="checkInteractionsBtn" class="btn-primary">Check</button>
-        </div>
-        <p class="hint">Press <kbd>Enter</kbd> to add each drug. Min 2, max 5.</p>
-        <p id="tagError" style="color:var(--danger,#e53);font-size:0.85rem;margin:4px 0 0;min-height:1em"></p>
-      </div>
-      <div id="interactionResult" class="result-area"></div>
-    </section>
-
-    <!-- ── RECALLS ── -->
-    <section id="tab-recalls" class="tab-panel">
-      <div class="hero">
-        <h1>RECALL<br><em>ALERTS</em></h1>
-        <p class="subtitle">Check if a medication has any active FDA enforcement or recall actions.</p>
-      </div>
-      <div class="search-bar">
-        <input type="text" id="recallInput" placeholder="e.g. Metformin, Zantac…" autocomplete="off" />
-        <button id="recallBtn" class="btn-primary">Check Recalls</button>
-      </div>
-      <div id="recallResult" class="result-area"></div>
-    </section>
-
-    <!-- ── MY MEDICINE CABINET ── -->
-    <section id="tab-cabinet" class="tab-panel">
-      <div class="hero">
-        <h1>MY MEDICINE<br><em>CABINET</em></h1>
-        <p class="subtitle">Your personal list of saved medications for quick access to dosage, side effects, and interactions.</p>
-      </div>
-      <div id="cabinetContent" class="result-area"></div>
-    </section>
-
-    <!-- ── INSIGHTS ── -->
-    <section id="tab-insights" class="tab-panel">
-      <div class="hero">
-        <h1>MEDICATION<br><em>INSIGHTS</em></h1>
-        <p class="subtitle">Visual analytics of your saved medications — type distribution, search frequency, and more.</p>
-      </div>
-      <div id="insightsContent" class="result-area"></div>
-    </section>
-
-    <!-- ── ABOUT ── -->
-    <section id="tab-about" class="tab-panel">
-      <div class="hero">
-        <h1>About<br><em>DrugsPal</em></h1>
-        <p class="subtitle">A free, open-access drug information platform built for patients, caregivers, and healthcare students.</p>
-      </div>
-
-      <div class="about-grid">
-
-        <div class="about-card">
-          <div class="about-card-icon"></div>
-          <h3>DRUG SEARCH</h3>
-          <p>Look up any prescription or OTC medication by brand or generic name. Results include purpose, dosage instructions, warnings, side effects, and contraindications — all sourced directly from FDA-approved drug labels.</p>
-        </div>
-
-        <div class="about-card">
-          <div class="about-card-icon"></div>
-          <h3>Interaction Checker</h3>
-          <p>Enter 2–5 medications to check for known drug-drug interactions. Each interaction is classified by severity (High, Moderate, Low) using the NIH RxNorm interaction database, helping you spot potentially dangerous combinations.</p>
-        </div>
-
-        <div class="about-card">
-          <div class="about-card-icon"></div>
-          <h3>RECALL ALERTS</h3>
-          <p>Search for FDA enforcement actions and recall notices for any medication. Results include recall classification (Class I–III), the reason for recall, current status, and the date the recall was initiated.</p>
-        </div>
-
-        <div class="about-card">
-          <div class="about-card-icon"></div>
-          <h3>MY MEDICINE CABINET</h3>
-          <p>Save frequently used or prescribed medications to your personal cabinet for quick access. Your cabinet is stored privately in your browser — nothing is sent to any server. From the cabinet, jump directly to search details, interactions, or recall checks.</p>
-        </div>
-
-      </div>
-
-      <div class="about-section">
-        <h2>DATA SOURCES</h2>
-        <div class="about-sources">
-          <div class="source-item">
-            <div class="source-badge">FDA</div>
-            <div>
-              <strong>OpenFDA Drug Label API</strong>
-              <p>Drug information (purpose, dosage, warnings, side effects) comes from the FDA's official structured product labeling database, updated continuously with the latest approved labels.</p>
-            </div>
-          </div>
-          <div class="source-item">
-            <div class="source-badge">NIH</div>
-            <div>
-              <strong>RxNorm / RxNav (NLM)</strong>
-              <p>Drug identifiers (RxCUI) and interaction data come from the National Library of Medicine's RxNorm database, the standard for clinical drug nomenclature in the United States.</p>
-            </div>
-          </div>
-          <div class="source-item">
-            <div class="source-badge">FDA</div>
-            <div>
-              <strong>OpenFDA Drug Enforcement API</strong>
-              <p>Recall and enforcement data comes from the FDA's drug enforcement reporting system, which tracks voluntary and mandatory product recalls and market withdrawals.</p>
-            </div>
-          </div>
+      <div id="library-results">
+        <div class="placeholder-msg">
+          <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&q=80"
+               alt="Exercise library" class="placeholder-img"
+               onerror="this.style.display='none'">
+          <p>Search for an exercise or pick a body part above</p>
         </div>
       </div>
-
-      <div class="about-section">
-        <h2>How to Use</h2>
-        <ol class="about-steps">
-          <li><strong>Drug Search:</strong> Type a medication name (brand or generic) and press Search. Click any section card to expand detailed information. Use the sort buttons to reorder sections.</li>
-          <li><strong>Interaction Checker:</strong> Type each drug name and press <kbd>Enter</kbd> to add it as a tag. Add 2–5 drugs, then click Check. Use the severity filter buttons to focus on high-risk interactions.</li>
-          <li><strong>Recall Alerts:</strong> Enter a drug name and click Check Recalls. Filter results by recall class (I = most serious) or search by keyword.</li>
-          <li><strong>Medicine Cabinet:</strong> After searching a drug, click "Save to Cabinet" to store it. Access your saved medications any time from the Cabinet tab and quickly jump to search, interactions, or recalls.</li>
-        </ol>
-      </div>
-
-      <div class="about-disclaimer">
-        <strong>Medical Disclaimer</strong>
-        <p>DrugsPal is intended for informational and educational purposes only. The information provided does not constitute medical advice and should not be used as a substitute for professional medical guidance, diagnosis, or treatment. Always consult a qualified healthcare provider before making any decisions about your medications. In case of a medical emergency, contact emergency services immediately.</p>
-      </div>
-
-      <div class="about-privacy">
-        <strong>Privacy</strong>
-        <p>DrugsPal does not collect, store, or transmit any personal data. Your Medicine Cabinet is saved exclusively in your browser's local storage and never leaves your device. Search queries are passed to the FDA and NIH APIs for data retrieval but are not logged by DrugsPal.</p>
-      </div>
-
     </section>
+
+    <!-- ── Weekly Plan ── -->
+    <section id="tab-weekly" class="tab-content">
+      <div class="section-header">
+        <h2>Weekly Training Plan</h2>
+        <p>Your 7-day workout schedule — click any day to preview gym or home exercises</p>
+      </div>
+      <div id="weekly-content">
+        <div class="loading"><div class="spinner"></div><p>Loading weekly plan…</p></div>
+      </div>
+    </section>
+
+    <!-- ── Nearby Gyms ── -->
+    <section id="tab-gyms" class="tab-content">
+      <div class="section-header">
+        <h2>Nearby Gyms &amp; Fitness Centers</h2>
+        <p>Find gyms near your location in Kigali, Rwanda</p>
+      </div>
+      <div class="gym-actions">
+        <button class="btn-primary btn-location" onclick="findGyms(true)">
+          <i class="fas fa-location-crosshairs"></i> Use My Location
+        </button>
+        <button class="btn-secondary" onclick="findGyms(false)">
+          <i class="fas fa-city"></i> Show All Kigali Gyms
+        </button>
+      </div>
+      <div id="gyms-list">
+        <div class="placeholder-msg">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80"
+               alt="Gym" class="placeholder-img"
+               onerror="this.style.display='none'">
+          <p>Click a button above to find fitness centers near you</p>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <footer>
-    <p>Data sourced from <a href="https://open.fda.gov" target="_blank">OpenFDA</a> &amp; <a href="https://lhncbc.nlm.nih.gov/RxNav/" target="_blank">RxNorm (NIH)</a> · For informational purposes only · Not a substitute for medical advice</p>
+  <footer class="footer">
+    <p>
+      ExercisePal &mdash; Exercise data by
+      <a href="https://rapidapi.com/justin-WFnsXH_t6/api/exercisedb" target="_blank" rel="noopener">ExerciseDB</a>
+      &nbsp;&middot;&nbsp; Gym locations by
+      <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a>
+    </p>
   </footer>
 
-  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">Dark Mode</button>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

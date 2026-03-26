@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s \"http://localhost:3000/api/drug/interactions?drugs=aspirin,ibuprofen\")",
+      "Bash(curl -s \"http://localhost:3000/api/drug/interactions?drugs=warfarin,aspirin\")",
+      "Bash(curl -s -I \"http://localhost:3000/api/drug/search?name=test\")",
+      "Bash(curl -s \"https://rxnav.nlm.nih.gov/REST/rxcui.json?name=warfarin\")",
+      "Bash(curl -s \"https://rxnav.nlm.nih.gov/REST/rxcui.json?name=aspirin\")",
+      "Bash(curl -sv \"https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=11289+1191\")",
+      "Bash(curl -s \"https://rxnav.nlm.nih.gov/REST/interaction/list.json?rxcuis=11289+1191\")",
+      "Bash(curl -s \"http://localhost:3000/api/drug/search?name=ibuprofen\")"
+    ]
+  }
+}
