@@ -27,6 +27,7 @@ let currentMode = 'gym'; // 'gym' or 'home'
 document.addEventListener('DOMContentLoaded', () => {
   setupTabs();
   setupTheme();
+  setupHamburger();
   loadDaily();
   loadBodyParts();
 });
@@ -42,6 +43,19 @@ function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === `tab-${tab}`));
   if (tab === 'weekly' && !weeklyLoaded) loadWeekly();
+  // Close hamburger menu on mobile after selecting a tab
+  document.getElementById('hamburger-btn').classList.remove('open');
+  document.getElementById('tab-nav').classList.remove('open');
+}
+
+// ── Hamburger ─────────────────────────────────────────────────────────────────
+function setupHamburger() {
+  const btn = document.getElementById('hamburger-btn');
+  const nav = document.getElementById('tab-nav');
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    nav.classList.toggle('open');
+  });
 }
 
 // ── Theme ─────────────────────────────────────────────────────────────────────

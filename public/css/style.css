@@ -774,17 +774,64 @@ a:hover { text-decoration: underline; }
   color: var(--muted);
 }
 
+/* ── Hamburger ───────────────────────────────────────────────────────────────── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  margin-left: auto;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all .25s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 /* ── Responsive ──────────────────────────────────────────────────────────────── */
 @media (max-width: 640px) {
   .header-inner { flex-wrap: wrap; height: auto; padding: 12px 16px; gap: 10px; }
-  .tab-nav { order: 3; width: 100%; }
-  .tab-btn { font-size: .78rem; padding: 7px 10px; }
+  .hamburger { display: flex; }
+  .theme-btn { margin-left: 0; font-size: .75rem; padding: 6px 10px; }
+
+  .tab-nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    order: 3;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 8px 0;
+    gap: 2px;
+  }
+  .tab-nav.open { display: flex; }
+
+  .tab-btn {
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    font-size: .95rem;
+    border-radius: 8px;
+  }
+
   .workout-header { padding: 22px 20px; }
   .workout-title { font-size: 1.5rem; }
   .exercise-grid { grid-template-columns: 1fr; }
   .weekly-grid { grid-template-columns: 1fr 1fr; }
   .mode-toggle { width: 100%; }
   .mode-btn { flex: 1; justify-content: center; }
+  .search-bar { flex-direction: column; }
+  .search-bar input, .search-bar select { width: 100%; }
 }
 
 @media (max-width: 400px) {
