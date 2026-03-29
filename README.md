@@ -6,7 +6,7 @@
 
 ---
 
-ExercisePal is a full-stack web application that acts as a personal fitness trainer. It provides daily workout plans, an exercise library with search and filter, a weekly training schedule, and a map of nearby gyms in Kigali, Rwanda. The app is designed to help users build and maintain a consistent fitness routine — whether they are at the gym or working out at home.
+ExercisePal is a full-stack web application that acts as a personal fitness trainer. It provides daily workout plans, an exercise library with search and filter, a weekly training schedule, and a map of nearby gyms in Kigali, Rwanda. The app is designed to help users build and maintain a consistent fitness routine  whether they are at the gym or working out at home.
 
 ---
 
@@ -235,8 +235,3 @@ exercisepal/
 - **Font** — [Inter](https://fonts.google.com/specimen/Inter) via Google Fonts (SIL Open Font License)
 - **Backend** — [Express.js](https://expressjs.com/), [Axios](https://axios-http.com/), [node-cache](https://github.com/node-cache/node-cache)
 
----
-
-## License
-
-This project was created as part of a school assignment at Holberton School.
